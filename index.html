@@ -3,44 +3,42 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lingua · Pravopis pro 2. stupeň</title>
+<title>Lingua · Český jazyk pro 2. stupeň ZŠ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="logo.png">
 <style>
 :root{
-  /* Edu colors */
-  --bg: #fbfaf7;          /* Off-white, mild paper */
+  --bg: #fbfaf7;
   --surface: #ffffff;
-  --ink: #0f172a;          /* Almost black */
+  --ink: #0f172a;
   --ink-soft: #475569;
   --ink-muted: #94a3b8;
-  --line: #e2e8f0;
+  --line: #e5e7eb;
   --line-soft: #f1f5f9;
-  
-  /* Brand */
-  --brand: #1e3a8a;        /* Deep blue - serious */
-  --brand-50: #eff6ff;
-  --brand-100: #dbeafe;
-  --accent: #32a0d2;       /* School blue */
-  --warm: #ffaa37;         /* School orange */
-  
-  /* States */
-  --ok: #047857;
-  --ok-bg: #ecfdf5;
-  --warn: #b45309;
-  --warn-bg: #fffbeb;
-  --err: #b91c1c;
-  --err-bg: #fef2f2;
-  
-  /* Type */
+
+  --accent: #32a0d2;       /* Školní modrá */
+  --warm: #ffaa37;          /* Školní oranžová */
+
+  /* 3 sekce */
+  --sec-jaz: #1e3a8a;
+  --sec-jaz-bg: #eff6ff;
+  --sec-jaz-border: #bfdbfe;
+
+  --sec-kom: #ea580c;       /* sytá oranžová - pro komunikační */
+  --sec-kom-bg: #fff7ed;
+  --sec-kom-border: #fed7aa;
+
+  --sec-lit: #1e293b;       /* tmavě šedá - pro literární */
+  --sec-lit-bg: #f1f5f9;
+  --sec-lit-border: #cbd5e1;
+
   --serif: 'Lora', Georgia, serif;
   --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  
-  /* Other */
+
   --r: 10px;
   --rl: 16px;
-  --shadow-sm: 0 1px 2px rgba(15,23,42,.04);
   --shadow: 0 4px 16px rgba(15,23,42,.06), 0 1px 3px rgba(15,23,42,.04);
   --shadow-lg: 0 12px 40px rgba(15,23,42,.08), 0 2px 8px rgba(15,23,42,.04);
 }
@@ -51,8 +49,8 @@ body{
   font-family: var(--sans);
   background: var(--bg);
   color: var(--ink);
-  line-height: 1.5;
-  font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+  line-height: 1.55;
+  font-feature-settings: 'kern' 1, 'liga' 1;
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
 }
@@ -64,13 +62,13 @@ body{
   position: sticky;
   top: 0;
   z-index: 100;
-  backdrop-filter: blur(8px);
-  background: rgba(255,255,255,.85);
+  backdrop-filter: blur(12px);
+  background: rgba(255,255,255,.92);
 }
 .topbar-inner{
   max-width: 1100px;
   margin: 0 auto;
-  padding: .8rem 1.5rem;
+  padding: .9rem 1.5rem;
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -78,17 +76,14 @@ body{
 .brand-mark{
   display: flex;
   align-items: center;
-  gap: .65rem;
+  gap: .8rem;
   text-decoration: none;
   color: var(--ink);
 }
 .brand-logo{
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: var(--surface);
-  border: 1.5px solid var(--line);
-  padding: 2px;
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
   flex-shrink: 0;
 }
 .brand-text{
@@ -98,7 +93,7 @@ body{
 }
 .brand-name{
   font-family: var(--serif);
-  font-size: 1.05rem;
+  font-size: 1.15rem;
   font-weight: 600;
   letter-spacing: -.01em;
   color: var(--ink);
@@ -107,728 +102,347 @@ body{
   font-size: .72rem;
   color: var(--ink-muted);
   font-weight: 500;
-  letter-spacing: .04em;
+  letter-spacing: .06em;
   text-transform: uppercase;
 }
-.topbar-spacer{flex: 1;}
-.topbar-streak{
-  font-family: var(--sans);
+.topbar-spacer{flex:1;}
+.topbar-link{
   font-size: .85rem;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--ink-soft);
-  display: inline-flex;
-  align-items: center;
-  gap: .35rem;
-  padding: .4rem .85rem;
-  background: var(--warn-bg);
-  border-radius: 99px;
-  border: 1px solid #fde68a;
+  text-decoration: none;
+  padding: .5rem .85rem;
+  border-radius: 8px;
+  transition: all .15s;
 }
-.topbar-streak svg{ color: var(--warm); }
+.topbar-link:hover{ background: var(--line-soft); color: var(--ink); }
 
-/* Main container */
+/* Main */
 .app{
   max-width: 1100px;
   margin: 0 auto;
-  padding: 2rem 1.5rem 5rem;
+  padding: 0 1.5rem 5rem;
 }
 
-/* Views */
-.view{display:none;}
-.view.active{display:block;}
-
-/* DASHBOARD */
+/* Hero - velký, vzdušný */
 .hero{
-  margin-bottom: 2.5rem;
-  display: grid;
-  grid-template-columns: 1.4fr 1fr;
-  gap: 1.5rem;
-  align-items: stretch;
-}
-@media (max-width: 760px){ .hero{grid-template-columns: 1fr;} }
-.hero-card{
-  background: linear-gradient(135deg, var(--brand) 0%, #2563eb 60%, var(--accent) 100%);
-  color: white;
-  padding: 2rem;
-  border-radius: var(--rl);
+  text-align: center;
+  padding: 4rem 1rem 3.5rem;
   position: relative;
-  overflow: hidden;
 }
-.hero-card::before{
-  content: '';
-  position: absolute;
-  top: -50%;
-  right: -20%;
-  width: 60%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(255,255,255,.1) 0%, transparent 60%);
-  pointer-events: none;
+.hero-logo-big{
+  width: 110px;
+  height: 142px;
+  object-fit: contain;
+  margin-bottom: 1.5rem;
+  filter: drop-shadow(0 8px 24px rgba(50,160,210,.15));
 }
-.hero-greeting{
-  font-size: .82rem;
+.hero-eyebrow{
+  display: inline-block;
+  font-size: .72rem;
   text-transform: uppercase;
-  letter-spacing: .12em;
-  opacity: .85;
-  margin-bottom: .5rem;
-  font-weight: 500;
+  letter-spacing: .22em;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 1.2rem;
+  padding: .4rem 1rem;
+  background: rgba(50,160,210,.08);
+  border-radius: 99px;
+  border: 1px solid rgba(50,160,210,.15);
 }
 .hero-title{
   font-family: var(--serif);
-  font-size: 2rem;
+  font-size: 3rem;
   font-weight: 600;
-  line-height: 1.15;
-  margin-bottom: .9rem;
-  letter-spacing: -.02em;
+  line-height: 1.1;
+  letter-spacing: -.025em;
+  margin-bottom: 1.2rem;
+  color: var(--ink);
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .hero-title em{
   font-style: italic;
-  color: #fde68a;
+  color: var(--accent);
+  font-weight: 500;
 }
-.hero-stats-row{
-  display: flex;
-  gap: 1.5rem;
-  margin-bottom: 1.5rem;
-  flex-wrap: wrap;
+.hero-desc{
+  font-size: 1.1rem;
+  color: var(--ink-soft);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.65;
 }
-.hero-stat-num{
-  font-family: var(--serif);
-  font-size: 2.1rem;
-  font-weight: 600;
-  line-height: 1;
-}
-.hero-stat-lbl{
-  font-size: .72rem;
-  text-transform: uppercase;
-  letter-spacing: .1em;
-  opacity: .85;
-  margin-top: .25rem;
-}
-.hero-cta{
-  display: inline-flex;
-  align-items: center;
-  gap: .5rem;
-  background: white;
-  color: var(--brand);
-  border: none;
-  padding: .8rem 1.5rem;
-  border-radius: 99px;
-  font-family: var(--sans);
-  font-size: .95rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: transform .15s, box-shadow .15s;
-}
-.hero-cta:hover{ transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,0,0,.18); }
-.hero-cta:disabled{ opacity: .5; cursor: default; transform: none; box-shadow: none; }
 
-.hero-aside{
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--rl);
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
+/* Section header large */
+.intro-band{
+  text-align: center;
+  margin: 1rem 0 2.5rem;
+  padding: 1.5rem 1rem;
 }
-.aside-title{
-  font-family: var(--serif);
-  font-size: 1.05rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-  color: var(--ink);
-}
-.box-progress{
-  display: flex;
-  flex-direction: column;
-  gap: .55rem;
-  flex: 1;
-}
-.box-row{
+.intro-band-line{
   display: flex;
   align-items: center;
-  gap: .65rem;
+  gap: 1rem;
+  max-width: 580px;
+  margin: 0 auto 1.5rem;
 }
-.box-icon{
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
+.intro-band-line::before,
+.intro-band-line::after{
+  content:'';
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+.intro-band-icon{
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--accent);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: var(--serif);
-  font-weight: 600;
-  font-size: .9rem;
   color: white;
   flex-shrink: 0;
 }
-.box-icon.b1{ background: #dc2626; }
-.box-icon.b2{ background: #ea580c; }
-.box-icon.b3{ background: #d97706; }
-.box-icon.b4{ background: #16a34a; }
-.box-icon.b5{ background: #1e3a8a; }
-.box-info{flex:1;}
-.box-name{
-  font-size: .82rem;
-  font-weight: 500;
-  color: var(--ink);
-}
-.box-interval{
-  font-size: .7rem;
-  color: var(--ink-muted);
-}
-.box-count{
+.intro-band h2{
   font-family: var(--serif);
-  font-weight: 600;
-  font-size: 1.05rem;
+  font-size: 1.6rem;
+  font-weight: 500;
+  letter-spacing: -.01em;
   color: var(--ink);
-  min-width: 28px;
-  text-align: right;
+  margin-bottom: .5rem;
+}
+.intro-band p{
+  font-size: .95rem;
+  color: var(--ink-soft);
+  max-width: 580px;
+  margin: 0 auto;
 }
 
 /* Sections */
-.section{margin-bottom: 2.5rem;}
-.section-head{
+.sections{
   display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 1rem;
-  border-bottom: 1px solid var(--line);
-  padding-bottom: .65rem;
-}
-.section-title{
-  font-family: var(--serif);
-  font-size: 1.35rem;
-  font-weight: 600;
-  letter-spacing: -.01em;
-  color: var(--ink);
-}
-.section-meta{
-  font-size: .8rem;
-  color: var(--ink-muted);
-  font-weight: 500;
+  flex-direction: column;
+  gap: 3rem;
 }
 
-/* Topic cards */
-.topics{
+.section-block{
+  position: relative;
+}
+
+.section-header{
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.1rem;
+  border-bottom: 2px solid;
+}
+.section-block.sec-jaz .section-header{ border-bottom-color: var(--sec-jaz); }
+.section-block.sec-kom .section-header{ border-bottom-color: var(--sec-kom); }
+.section-block.sec-lit .section-header{ border-bottom-color: var(--sec-lit); }
+
+.section-num-wrap{
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-family: var(--serif);
+  font-size: 1.6rem;
+  font-style: italic;
+  font-weight: 500;
+  color: white;
+}
+.section-block.sec-jaz .section-num-wrap{ background: var(--sec-jaz); }
+.section-block.sec-kom .section-num-wrap{ background: var(--sec-kom); }
+.section-block.sec-lit .section-num-wrap{ background: var(--sec-lit); }
+
+.section-info{ flex: 1; }
+.section-info h2{
+  font-family: var(--serif);
+  font-size: 1.85rem;
+  font-weight: 600;
+  letter-spacing: -.015em;
+  color: var(--ink);
+  margin-bottom: .25rem;
+}
+.section-info p{
+  font-size: .95rem;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+
+/* Topic grid */
+.topic-grid{
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 1rem;
 }
-.topic{
+
+.topic-card{
+  display: block;
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--rl);
-  padding: 1.25rem;
-  cursor: pointer;
-  transition: all .18s;
+  padding: 1.5rem;
+  text-decoration: none;
+  color: inherit;
+  transition: all .2s ease;
   position: relative;
   overflow: hidden;
 }
-.topic::before{
+.topic-card::before{
   content: '';
   position: absolute;
   left: 0;
   top: 0;
   bottom: 0;
-  width: 3px;
-  background: var(--accent);
-  transform: scaleY(0);
-  transition: transform .25s ease;
-  transform-origin: top;
+  width: 4px;
+  background: currentColor;
+  opacity: 0;
+  transition: opacity .2s;
 }
-.topic.active::before{ transform: scaleY(1); }
-.topic.inactive{
-  background: #f8f7f3;
-  opacity: .75;
+.topic-card:hover{
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
 }
-.topic.inactive .topic-title{ color: var(--ink-soft); }
-.topic:hover{
-  border-color: var(--brand-100);
-  box-shadow: var(--shadow);
-  transform: translateY(-2px);
-}
-.topic.active:hover::before{ transform: scaleY(1); }
-.topic.lit::before{ background: var(--warm); }
-.topic.kom::before{ background: #8b5cf6; }
+.topic-card:hover::before{ opacity: 1; }
 
-/* Topic toggle (přepínač aktivity) */
-.topic-toggle-row{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: .55rem;
-}
-.topic-toggle{
-  width: 36px;
-  height: 20px;
-  border-radius: 99px;
-  border: none;
-  background: var(--line);
-  position: relative;
-  cursor: pointer;
-  transition: background .15s;
-  padding: 0;
-  flex-shrink: 0;
-}
-.topic-toggle:hover{ filter: brightness(.95); }
-.topic-toggle .toggle-knob{
-  display: block;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: white;
-  position: absolute;
-  top: 3px;
-  left: 3px;
-  transition: left .15s, background .15s;
-  box-shadow: 0 1px 2px rgba(0,0,0,.15);
-}
-.topic-toggle.on{ background: var(--accent); }
-.topic-toggle.on .toggle-knob{ left: 19px; }
+.sec-jaz .topic-card{ color: var(--sec-jaz); }
+.sec-jaz .topic-card:hover{ border-color: var(--sec-jaz-border); }
+.sec-kom .topic-card{ color: var(--sec-kom); }
+.sec-kom .topic-card:hover{ border-color: var(--sec-kom-border); }
+.sec-lit .topic-card{ color: var(--sec-lit); }
+.sec-lit .topic-card:hover{ border-color: var(--sec-lit-border); }
 
-.topic-tag{
-  font-size: .68rem;
-  text-transform: uppercase;
-  letter-spacing: .12em;
-  color: var(--ink-muted);
-  margin-bottom: .55rem;
-  font-weight: 600;
-}
-.topic-title{
+.topic-card-title{
   font-family: var(--serif);
-  font-size: 1.15rem;
+  font-size: 1.25rem;
   font-weight: 600;
+  letter-spacing: -.01em;
   margin-bottom: .35rem;
-  line-height: 1.2;
   color: var(--ink);
 }
-.topic-desc{
-  font-size: .82rem;
+.topic-card-desc{
+  font-size: .85rem;
   color: var(--ink-soft);
-  line-height: 1.45;
+  line-height: 1.5;
   margin-bottom: 1rem;
 }
-.topic-stats{
+.topic-card-meta{
   display: flex;
-  gap: 1rem;
-  margin-top: .9rem;
+  justify-content: space-between;
+  align-items: center;
+  font-size: .78rem;
+  color: var(--ink-muted);
   padding-top: .9rem;
   border-top: 1px solid var(--line-soft);
-  font-size: .75rem;
-  color: var(--ink-soft);
 }
-.topic-stat{
-  display: flex;
-  align-items: center;
-  gap: .35rem;
-}
-.topic-stat-num{
-  font-family: var(--serif);
-  font-weight: 600;
-  font-size: .9rem;
-  color: var(--ink);
-}
-.topic-due{
-  display: inline-flex;
-  align-items: center;
-  gap: .3rem;
-  background: var(--warn-bg);
-  color: var(--warn);
-  padding: .2rem .55rem;
-  border-radius: 99px;
-  font-size: .7rem;
-  font-weight: 600;
-  margin-left: auto;
-}
-.topic-due.zero{
-  background: var(--ok-bg);
-  color: var(--ok);
-}
-
-/* STUDY VIEW (flashcards) */
-.study-bar{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1.5rem;
-  padding: .75rem 1rem;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--r);
-}
-.back-btn{
-  background: none;
-  border: none;
-  color: var(--ink-soft);
-  font-family: var(--sans);
-  font-size: .85rem;
-  font-weight: 500;
-  cursor: pointer;
-  padding: .35rem .65rem;
-  border-radius: 6px;
-  display: inline-flex;
-  align-items: center;
-  gap: .35rem;
-}
-.back-btn:hover{ background: var(--line-soft); color: var(--ink); }
-.study-progress-bar{
-  flex: 1;
-  height: 4px;
-  background: var(--line-soft);
-  border-radius: 99px;
-  margin: 0 1.5rem;
-  max-width: 300px;
-  overflow: hidden;
-}
-.study-progress-fill{
-  height: 100%;
-  background: linear-gradient(90deg, var(--brand), var(--accent));
-  border-radius: 99px;
-  transition: width .3s ease;
-}
-.study-counter{
+.topic-card-meta .count{
   font-family: var(--serif);
   font-weight: 600;
   color: var(--ink);
-  font-size: .9rem;
+  font-size: .92rem;
 }
-.study-counter span{ color: var(--ink-muted); font-weight: 500; }
+.topic-card-arrow{
+  font-size: 1.2rem;
+  transition: transform .2s;
+  color: currentColor;
+  font-weight: 600;
+}
+.topic-card:hover .topic-card-arrow{ transform: translateX(5px); }
 
-/* Card */
-.card-frame{
-  display: flex;
-  justify-content: center;
-  margin: 2rem 0;
-  perspective: 1500px;
+/* Soon */
+.topic-card.soon{
+  opacity: .55;
+  cursor: not-allowed;
+  background: #f8f7f3;
 }
-.card{
-  width: 100%;
-  max-width: 620px;
-  min-height: 280px;
-  border-radius: var(--rl);
-  cursor: pointer;
-  position: relative;
-  transform-style: preserve-3d;
-  transition: transform .55s cubic-bezier(.4,.2,.2,1);
-}
-.card.flipped{ transform: rotateY(180deg); }
-.card-side{
-  position: absolute;
-  inset: 0;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--rl);
-  padding: 2.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  backface-visibility: hidden;
-  box-shadow: var(--shadow);
-}
-.card-side.back{ transform: rotateY(180deg); }
-.card-side.back .card-q{ color: var(--ink-muted); font-size: .82rem; margin-bottom: 1rem; font-style: italic; }
-
-.card-tag{
+.topic-card.soon:hover{ transform: none; box-shadow: none; }
+.topic-card.soon::before{ display: none; }
+.topic-card.soon .topic-card-meta::after{
+  content: 'Brzy';
   font-size: .68rem;
   text-transform: uppercase;
-  letter-spacing: .14em;
-  color: var(--accent);
-  font-weight: 600;
-  margin-bottom: 1.25rem;
-}
-.card-q{
-  font-family: var(--serif);
-  font-size: 1.6rem;
-  font-weight: 500;
-  line-height: 1.35;
-  color: var(--ink);
-  letter-spacing: -.01em;
-  max-width: 480px;
-}
-.card-q em{ color: var(--brand); font-weight: 600; font-style: normal; }
-.card-a{
-  font-family: var(--serif);
-  font-size: 1.4rem;
-  font-weight: 600;
-  line-height: 1.3;
-  color: var(--brand);
-  margin-bottom: 1rem;
-  letter-spacing: -.01em;
-}
-.card-explain{
-  font-size: .92rem;
-  color: var(--ink-soft);
-  line-height: 1.55;
-  max-width: 480px;
-  margin-top: .5rem;
-}
-.card-flip-hint{
-  position: absolute;
-  bottom: 1rem;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: .72rem;
+  letter-spacing: .1em;
   color: var(--ink-muted);
-  letter-spacing: .05em;
-  pointer-events: none;
-}
-
-/* Self-rating buttons */
-.rate{
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: .65rem;
-  margin: 1.5rem auto 0;
-  max-width: 620px;
-}
-.rate-btn{
-  background: var(--surface);
-  border: 1.5px solid var(--line);
-  border-radius: var(--r);
-  padding: 1rem .75rem;
-  font-family: var(--sans);
-  cursor: pointer;
-  transition: all .15s;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  gap: .2rem;
-}
-.rate-btn:hover{ transform: translateY(-2px); box-shadow: var(--shadow); }
-.rate-btn.bad:hover{ border-color: var(--err); background: var(--err-bg); }
-.rate-btn.mid:hover{ border-color: var(--warn); background: var(--warn-bg); }
-.rate-btn.good:hover{ border-color: var(--ok); background: var(--ok-bg); }
-.rate-btn-lbl{ font-weight: 600; font-size: .92rem; }
-.rate-btn-sub{ font-size: .72rem; color: var(--ink-muted); }
-.rate-btn:disabled{ opacity: .4; cursor: default; }
-
-/* Quiz styles */
-.quiz-q{
-  font-family: var(--serif);
-  font-size: 1.35rem;
-  line-height: 1.4;
-  text-align: center;
-  margin: 1.5rem auto;
-  max-width: 600px;
-  color: var(--ink);
-  font-weight: 500;
-}
-.quiz-options{
-  display: flex;
-  flex-direction: column;
-  gap: .65rem;
-  max-width: 520px;
-  margin: 0 auto;
-}
-.quiz-opt{
-  background: var(--surface);
-  border: 1.5px solid var(--line);
-  border-radius: var(--r);
-  padding: .9rem 1.15rem;
-  font-family: var(--sans);
-  font-size: .98rem;
-  cursor: pointer;
-  text-align: left;
-  transition: all .15s;
-  color: var(--ink);
-}
-.quiz-opt:hover:not(:disabled){
-  border-color: var(--accent);
-  background: var(--brand-50);
-}
-.quiz-opt.ok{
-  border-color: var(--ok);
-  background: var(--ok-bg);
-  color: var(--ok);
   font-weight: 600;
-}
-.quiz-opt.err{
-  border-color: var(--err);
-  background: var(--err-bg);
-  color: var(--err);
-}
-
-.quiz-fb{
-  margin: 1.5rem auto;
-  max-width: 520px;
-  padding: .9rem 1.15rem;
-  border-radius: var(--r);
-  font-size: .92rem;
-  line-height: 1.5;
-  display: none;
-}
-.quiz-fb.show{ display: block; }
-.quiz-fb.ok{ background: var(--ok-bg); border-left: 3px solid var(--ok); color: var(--ok); }
-.quiz-fb.err{ background: var(--err-bg); border-left: 3px solid var(--err); color: var(--err); }
-.quiz-fb b{ font-weight: 600; }
-
-.next-btn{
-  display: block;
-  margin: 1.5rem auto 0;
-  background: var(--brand);
-  color: white;
-  border: none;
-  padding: .85rem 2rem;
+  background: var(--line-soft);
+  padding: .2rem .6rem;
   border-radius: 99px;
-  font-family: var(--sans);
-  font-size: .95rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all .15s;
 }
-.next-btn:hover{ background: #1d4ed8; transform: translateY(-1px); }
-.next-btn:disabled{ opacity:.4; cursor:default; transform: none; }
+.topic-card.soon .topic-card-arrow{ display: none; }
 
-/* TOPIC PAGE */
-.topic-hero{
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--rl);
-  padding: 2rem;
-  margin-bottom: 2rem;
-}
-.topic-hero-tag{
-  font-size: .72rem;
-  text-transform: uppercase;
-  letter-spacing: .12em;
-  color: var(--accent);
-  font-weight: 600;
-  margin-bottom: .5rem;
-}
-.topic-hero-title{
-  font-family: var(--serif);
-  font-size: 2rem;
-  font-weight: 600;
-  letter-spacing: -.02em;
-  color: var(--ink);
-  margin-bottom: .5rem;
-}
-.topic-hero-desc{
-  color: var(--ink-soft);
-  font-size: 1rem;
-  line-height: 1.55;
-  max-width: 600px;
-}
-.topic-actions{
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-.action-card{
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--rl);
-  padding: 1.5rem;
-  cursor: pointer;
-  transition: all .18s;
-  display: flex;
-  flex-direction: column;
-  gap: .5rem;
-}
-.action-card:hover{ border-color: var(--brand-100); box-shadow: var(--shadow); transform: translateY(-2px); }
-.action-card.disabled{ opacity:.5; cursor: not-allowed; }
-.action-card.disabled:hover{ transform: none; box-shadow: none; border-color: var(--line); }
-.action-icon{
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
-  background: var(--brand-50);
-  color: var(--brand);
-  display: flex;
+/* Status pill */
+.topic-status{
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  margin-bottom: .25rem;
-}
-.action-icon.warm{ background: var(--warn-bg); color: var(--warm); }
-.action-title{
-  font-family: var(--serif);
-  font-size: 1.05rem;
+  gap: .35rem;
+  font-size: .68rem;
   font-weight: 600;
-  color: var(--ink);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  padding: .22rem .65rem;
+  border-radius: 99px;
+  margin-bottom: .65rem;
 }
-.action-desc{
-  font-size: .82rem;
-  color: var(--ink-soft);
-  line-height: 1.4;
+.topic-status.ready{
+  background: rgba(50,160,210,.1);
+  color: var(--accent);
 }
-.action-stat{
+.topic-status.ready::before{
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* Footer */
+.footer{
+  margin-top: 5rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--line);
+  text-align: center;
+  font-size: .85rem;
+  color: var(--ink-muted);
+  line-height: 1.7;
+}
+.footer-logo{
+  width: 36px;
+  height: 47px;
+  object-fit: contain;
+  margin-bottom: .8rem;
+  opacity: .5;
+}
+.footer b{ color: var(--ink-soft); font-weight: 600; }
+.footer-meta{
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
   margin-top: .5rem;
   font-size: .78rem;
   color: var(--ink-muted);
 }
-.action-stat b{ color: var(--ink); font-weight: 600; }
-
-/* Done state */
-.done-wrap{
-  text-align: center;
-  padding: 3rem 1rem;
-}
-.done-icon{
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background: var(--ok-bg);
-  color: var(--ok);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 1.25rem;
-  font-size: 2rem;
-}
-.done-title{
-  font-family: var(--serif);
-  font-size: 1.6rem;
-  font-weight: 600;
-  margin-bottom: .5rem;
-  letter-spacing: -.01em;
-}
-.done-meta{
-  color: var(--ink-soft);
-  margin-bottom: 1.5rem;
-}
-.done-stats{
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  margin: 1.5rem 0 2rem;
-  flex-wrap: wrap;
-}
-.done-stat{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.done-stat-num{
-  font-family: var(--serif);
-  font-size: 2rem;
-  font-weight: 600;
-  color: var(--ink);
-}
-.done-stat-num.ok{ color: var(--ok); }
-.done-stat-num.err{ color: var(--err); }
-.done-stat-lbl{
-  font-size: .72rem;
-  text-transform: uppercase;
-  letter-spacing: .1em;
-  color: var(--ink-muted);
-  margin-top: .15rem;
-}
 
 /* Mobile */
-@media (max-width: 600px){
-  .app{ padding: 1.25rem 1rem 4rem; }
-  .topbar-inner{ padding: .65rem 1rem; }
-  .hero-card{ padding: 1.5rem; }
-  .hero-title{ font-size: 1.55rem; }
-  .card-side{ padding: 1.75rem 1.25rem; }
-  .card-q{ font-size: 1.25rem; }
-  .card-a{ font-size: 1.15rem; }
-  .quiz-q{ font-size: 1.1rem; }
-  .topic-hero-title{ font-size: 1.5rem; }
-  .rate-btn{ padding: .8rem .5rem; }
-  .rate-btn-sub{ display: none; }
+@media (max-width: 700px){
+  .app{ padding: 0 1rem 4rem; }
+  .topbar-inner{ padding: .7rem 1rem; }
+  .topbar-link{ display: none; }
+  .hero{ padding: 2.5rem .5rem 2rem; }
+  .hero-logo-big{ width: 80px; height: 103px; margin-bottom: 1rem; }
+  .hero-title{ font-size: 2rem; }
+  .hero-desc{ font-size: .98rem; }
+  .intro-band h2{ font-size: 1.3rem; }
+  .section-header{ gap: .8rem; }
+  .section-num-wrap{ width: 44px; height: 44px; font-size: 1.3rem; }
+  .section-info h2{ font-size: 1.4rem; }
 }
 </style>
 </head>
@@ -836,668 +450,191 @@ body{
 
 <div class="topbar">
   <div class="topbar-inner">
-    <a href="#" class="brand-mark" onclick="goView('dashboard');return false;">
-      <img class="brand-logo" src="logo.png" alt="" onerror="this.style.display='none'">
+    <a href="index.html" class="brand-mark">
+      <img class="brand-logo" src="logo.png" alt="Lingua Universal">
       <div class="brand-text">
         <span class="brand-name">Lingua</span>
-        <span class="brand-sub">Pravopis · 2. stupeň ZŠ</span>
+        <span class="brand-sub">Český jazyk · 2. stupeň</span>
       </div>
     </a>
     <div class="topbar-spacer"></div>
-    <div class="topbar-streak" id="streak-badge">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c-1 4-4 5-4 8 0 3 2 5 4 5s4-2 4-5c0-3-3-4-4-8zm-7 13c0 4 3 7 7 7s7-3 7-7c0-2-1-4-2-5 0 3-2 4-2 4 0-2-1-3-2-4-1 1-1 3-1 4 0 1-1 2-2 2-2 0-2-1-2-1z"/></svg>
-      <span id="streak-num">0</span> dní v řadě
-    </div>
+    <a href="https://www.zslingua.cz" class="topbar-link" target="_blank" rel="noopener">zslingua.cz ↗</a>
   </div>
 </div>
 
 <main class="app">
 
-<!-- ============ DASHBOARD VIEW ============ -->
-<div class="view active" id="view-dashboard">
   <section class="hero">
-    <div class="hero-card">
-      <div class="hero-greeting">Vítej zpátky</div>
-      <h1 class="hero-title" id="hero-title">Pravopis <em>krok za krokem</em><br>chytrým opakováním</h1>
-      <div class="hero-stats-row">
-        <div>
-          <div class="hero-stat-num" id="dash-due">0</div>
-          <div class="hero-stat-lbl">Karet k opakování</div>
-        </div>
-        <div>
-          <div class="hero-stat-num" id="dash-mastered">0</div>
-          <div class="hero-stat-lbl">Naučeno (Box 5)</div>
-        </div>
-        <div>
-          <div class="hero-stat-num" id="dash-total">0</div>
-          <div class="hero-stat-lbl">Celkem karet</div>
-        </div>
-      </div>
-      <button class="hero-cta" id="hero-cta">
-        Opakovat dnešní karty
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-      </button>
-    </div>
-    <aside class="hero-aside">
-      <div class="aside-title">Leitner — boxy</div>
-      <div class="box-progress" id="box-progress">
-        <!-- Generováno JS -->
-      </div>
-    </aside>
+    <img class="hero-logo-big" src="logo.png" alt="Lingua Universal">
+    <div class="hero-eyebrow">ZŠ Lingua Universal · 6.–9. ročník</div>
+    <h1 class="hero-title">Český jazyk a literatura<br>chytrým <em>opakováním</em></h1>
+    <p class="hero-desc">Vyber si oblast, do které se chceš ponořit. Každé téma obsahuje stručnou teorii, kartičky pro chytré opakování (Leitner systém) a kvíz pro ověření znalostí.</p>
   </section>
 
-  <section class="section">
-    <div class="section-head">
-      <h2 class="section-title">Pravopis</h2>
-      <div class="section-meta" id="meta-pravopis">— témat</div>
+  <section class="intro-band">
+    <div class="intro-band-line">
+      <div class="intro-band-line">
+        <div class="intro-band-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        </div>
+      </div>
     </div>
-    <div class="topics" id="topics-pravopis"></div>
+    <h2>Tři oblasti českého jazyka</h2>
+    <p>Podle Rámcového vzdělávacího programu pro 2. stupeň ZŠ. Každá oblast pokrývá svou sadu témat — vyber si tu, kterou se chceš učit nebo opakovat.</p>
   </section>
-</div>
 
-<!-- ============ TOPIC DETAIL VIEW ============ -->
-<div class="view" id="view-topic">
-  <button class="back-btn" onclick="goView('dashboard')" style="margin-bottom:1rem">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-    Zpět na přehled
-  </button>
-  <div class="topic-hero">
-    <div class="topic-hero-tag" id="t-tag">—</div>
-    <h1 class="topic-hero-title" id="t-title">—</h1>
-    <p class="topic-hero-desc" id="t-desc">—</p>
-  </div>
-  <div class="topic-actions">
-    <div class="action-card" id="t-action-review" onclick="startTopicReview()">
-      <div class="action-icon warm">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="10"/></svg>
+  <div class="sections">
+
+    <!-- ═════ JAZYKOVÁ VÝCHOVA ═════ -->
+    <section class="section-block sec-jaz">
+      <div class="section-header">
+        <div class="section-num-wrap">I.</div>
+        <div class="section-info">
+          <h2>Jazyková výchova</h2>
+          <p>Pravopis, tvarosloví, skladba, lexikologie. Pravidla a výjimky češtiny.</p>
+        </div>
       </div>
-      <div class="action-title">Opakovat dnes</div>
-      <div class="action-desc">Karty, které jsou dnes na řadě podle Leitner systému</div>
-      <div class="action-stat"><b id="t-due">0</b> karet · <span id="t-due-time">—</span></div>
-    </div>
-    <div class="action-card" onclick="startTopicLearn()">
-      <div class="action-icon">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/></svg>
+      <div class="topic-grid sec-jaz">
+
+        <a href="pravopis.html" class="topic-card">
+          <div class="topic-status ready">Hotovo</div>
+          <div class="topic-card-title">Pravopis</div>
+          <div class="topic-card-desc">Vyjmenovaná slova, shoda přísudku s podmětem, velká písmena, mě/mně, předpony, čárky.</div>
+          <div class="topic-card-meta">
+            <span><span class="count">10</span> témat · <span class="count">227</span> karet</span>
+            <span class="topic-card-arrow">→</span>
+          </div>
+        </a>
+
+        <div class="topic-card soon">
+          <div class="topic-card-title">Tvarosloví</div>
+          <div class="topic-card-desc">Slovní druhy a kategorie, skloňování podstatných jmen, stupňování přídavných jmen, slovesné kategorie.</div>
+          <div class="topic-card-meta">
+            <span>cca <span class="count">8</span> témat</span>
+          </div>
+        </div>
+
+        <div class="topic-card soon">
+          <div class="topic-card-title">Skladba</div>
+          <div class="topic-card-desc">Větné členy (Po, Př, Pt, Pu, Pk), poměry mezi větami hlavními, druhy vět vedlejších.</div>
+          <div class="topic-card-meta">
+            <span>cca <span class="count">6</span> témat</span>
+          </div>
+        </div>
+
+        <div class="topic-card soon">
+          <div class="topic-card-title">Lexikologie</div>
+          <div class="topic-card-desc">Slovní zásoba, synonyma, antonyma, homonyma. Slova přejatá a jejich pravopis.</div>
+          <div class="topic-card-meta">
+            <span>cca <span class="count">4</span> témata</span>
+          </div>
+        </div>
+
       </div>
-      <div class="action-title">Učit se nové</div>
-      <div class="action-desc">Procházet všechny karty (flashcards) — bez vlivu na Leitner</div>
-      <div class="action-stat"><b id="t-total">0</b> karet celkem</div>
-    </div>
-    <div class="action-card" onclick="startTopicQuiz()">
-      <div class="action-icon">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+    </section>
+
+    <!-- ═════ KOMUNIKAČNÍ A SLOHOVÁ ═════ -->
+    <section class="section-block sec-kom">
+      <div class="section-header">
+        <div class="section-num-wrap">II.</div>
+        <div class="section-info">
+          <h2>Komunikační a slohová výchova</h2>
+          <p>Slohové útvary, funkční styly, komunikace v digitálním prostředí.</p>
+        </div>
       </div>
-      <div class="action-title">Kvíz</div>
-      <div class="action-desc">Vyzkouš si znalosti — výběr ze 4 možností</div>
-      <div class="action-stat"><b id="t-quiz-count">0</b> otázek</div>
-    </div>
-  </div>
+      <div class="topic-grid sec-kom">
 
-  <div class="section">
-    <div class="section-head">
-      <h2 class="section-title" style="font-size:1.15rem">Stav karet</h2>
-    </div>
-    <div class="hero-aside" style="margin:0">
-      <div class="box-progress" id="t-box-progress"></div>
-    </div>
-  </div>
-</div>
+        <a href="slohove-utvary.html" class="topic-card">
+          <div class="topic-status ready">Hotovo</div>
+          <div class="topic-card-title">Slohové útvary</div>
+          <div class="topic-card-desc">Vyprávění, popis, charakteristika, úvaha. Znaky útvarů a kdy je použít.</div>
+          <div class="topic-card-meta">
+            <span><span class="count">5</span> témat · <span class="count">75</span> karet</span>
+            <span class="topic-card-arrow">→</span>
+          </div>
+        </a>
 
-<!-- ============ STUDY VIEW (flashcards) ============ -->
-<div class="view" id="view-study">
-  <div class="study-bar">
-    <button class="back-btn" onclick="confirmExit()">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-      Ukončit
-    </button>
-    <div class="study-progress-bar"><div class="study-progress-fill" id="study-fill" style="width:0%"></div></div>
-    <div class="study-counter"><span id="study-now">1</span> / <span id="study-total">10</span></div>
-  </div>
+        <div class="topic-card soon">
+          <div class="topic-card-title">Funkční styly</div>
+          <div class="topic-card-desc">Umělecký, odborný, publicistický, administrativní, prostěsdělovací styl.</div>
+          <div class="topic-card-meta">
+            <span>cca <span class="count">5</span> témat</span>
+          </div>
+        </div>
 
-  <div class="card-frame">
-    <div class="card" id="card" onclick="flipCard()">
-      <div class="card-side front">
-        <div class="card-tag" id="card-tag">—</div>
-        <div class="card-q" id="card-q">—</div>
-        <div class="card-flip-hint">Klikni na kartu pro odhalení</div>
+        <div class="topic-card soon">
+          <div class="topic-card-title">Komunikace v digitálu</div>
+          <div class="topic-card-desc">Mediální gramotnost, kritické myšlení, ověřování informací, etika online.</div>
+          <div class="topic-card-meta">
+            <span>cca <span class="count">4</span> témata</span>
+          </div>
+        </div>
+
       </div>
-      <div class="card-side back">
-        <div class="card-q" id="card-q-back">—</div>
-        <div class="card-a" id="card-a">—</div>
-        <div class="card-explain" id="card-explain"></div>
+    </section>
+
+    <!-- ═════ LITERÁRNÍ VÝCHOVA ═════ -->
+    <section class="section-block sec-lit">
+      <div class="section-header">
+        <div class="section-num-wrap">III.</div>
+        <div class="section-info">
+          <h2>Literární výchova</h2>
+          <p>Literární druhy, žánry, periody české i světové literatury, interpretace textu.</p>
+        </div>
       </div>
+      <div class="topic-grid sec-lit">
+
+        <a href="literarni-druhy.html" class="topic-card">
+          <div class="topic-status ready">Hotovo</div>
+          <div class="topic-card-title">Literární druhy a žánry</div>
+          <div class="topic-card-desc">Lyrika, epika, drama. Pohádka, román, novela, balada, sonet, óda, tragédie, komedie.</div>
+          <div class="topic-card-meta">
+            <span><span class="count">6</span> témat · <span class="count">90</span> karet</span>
+            <span class="topic-card-arrow">→</span>
+          </div>
+        </a>
+
+        <div class="topic-card soon">
+          <div class="topic-card-title">Literární teorie</div>
+          <div class="topic-card-desc">Verš, rým, postava, vypravěč, námět, téma. Stylistické prostředky.</div>
+          <div class="topic-card-meta">
+            <span>cca <span class="count">5</span> témat</span>
+          </div>
+        </div>
+
+        <div class="topic-card soon">
+          <div class="topic-card-title">Periody české literatury</div>
+          <div class="topic-card-desc">Národní obrození, realismus, moderna, mezi válkami, současnost. Klíčoví autoři a díla.</div>
+          <div class="topic-card-meta">
+            <span>cca <span class="count">7</span> témat</span>
+          </div>
+        </div>
+
+        <div class="topic-card soon">
+          <div class="topic-card-title">Interpretace textu</div>
+          <div class="topic-card-desc">Čtení s porozuměním, hledání hlavní myšlenky, analýza autora a kontextu.</div>
+          <div class="topic-card-meta">
+            <span>cca <span class="count">3</span> témata</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+
+  <footer class="footer">
+    <img class="footer-logo" src="logo.png" alt="Lingua Universal">
+    <div><b>ZŠ a MŠ Lingua Universal</b></div>
+    <div>Sovova 480/2, 412 01 Litoměřice</div>
+    <div class="footer-meta">
+      <a href="https://www.zslingua.cz" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none">zslingua.cz</a>
+      <span>·</span>
+      <span>Pro 2. stupeň · momentálně dostupné <b style="color:var(--ink-soft)">3 oblasti</b></span>
     </div>
-  </div>
-
-  <div class="rate" id="rate-buttons" style="visibility:hidden">
-    <button class="rate-btn bad" onclick="rateCard(0)">
-      <span class="rate-btn-lbl">Nevím</span>
-      <span class="rate-btn-sub">Zítra znovu</span>
-    </button>
-    <button class="rate-btn mid" onclick="rateCard(1)">
-      <span class="rate-btn-lbl">Trochu</span>
-      <span class="rate-btn-sub">Stejný box</span>
-    </button>
-    <button class="rate-btn good" onclick="rateCard(2)">
-      <span class="rate-btn-lbl">Vím</span>
-      <span class="rate-btn-sub">Další box</span>
-    </button>
-  </div>
-</div>
-
-<!-- ============ QUIZ VIEW ============ -->
-<div class="view" id="view-quiz">
-  <div class="study-bar">
-    <button class="back-btn" onclick="confirmExit()">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-      Ukončit
-    </button>
-    <div class="study-progress-bar"><div class="study-progress-fill" id="quiz-fill" style="width:0%"></div></div>
-    <div class="study-counter"><span id="quiz-now">1</span> / <span id="quiz-total">10</span></div>
-  </div>
-
-  <div style="background:var(--surface);border:1px solid var(--line);border-radius:var(--rl);padding:2rem 1.5rem;">
-    <div class="card-tag" id="quiz-tag" style="text-align:center;margin-bottom:.5rem">—</div>
-    <div class="quiz-q" id="quiz-q">—</div>
-    <div class="quiz-options" id="quiz-options"></div>
-    <div class="quiz-fb" id="quiz-fb"></div>
-    <button class="next-btn" id="quiz-next" onclick="quizNext()" style="display:none">Další otázka</button>
-  </div>
-</div>
-
-<!-- ============ DONE VIEW ============ -->
-<div class="view" id="view-done">
-  <div class="done-wrap">
-    <div class="done-icon">
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-    </div>
-    <h2 class="done-title" id="done-title">Hotovo!</h2>
-    <p class="done-meta" id="done-meta">—</p>
-    <div class="done-stats" id="done-stats"></div>
-    <button class="hero-cta" onclick="goView('dashboard')" style="background:var(--brand);color:white">
-      Zpět na přehled
-    </button>
-  </div>
-</div>
+  </footer>
 
 </main>
 
-<script src="data-pravopis.js"></script>
-<script>
-
-/* ═══════════════════════════════════════════════════════
-   LEITNER BOX SYSTEM
-═══════════════════════════════════════════════════════ */
-const BOX_INTERVALS = [1, 1, 3, 7, 14, 30];  /* index 0 = box 1 (1 day) */
-const BOX_NAMES = ['Box 1 — denně', 'Box 2 — za 1 den', 'Box 3 — za 3 dny', 'Box 4 — za týden', 'Box 5 — za 14 dní'];
-const STORAGE_KEY = 'lingua2_state_v1';
-
-function loadState(){
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if(raw) return JSON.parse(raw);
-  } catch(e){}
-  return null;
-}
-function saveState(){
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e){}
-}
-
-let state = loadState() || initState();
-
-function initState(){
-  const s = {
-    cards: {},  /* {topicId+cardIdx: {box: 1-5, due: timestamp, last: timestamp}} */
-    activeTopics: {},  /* {topicId: true/false} - kterým tématům se učíme */
-    streak: 0,
-    lastVisit: null,
-    quizStats: {}
-  };
-  /* Zpočátku NEJSOU žádná aktivní - žák si vybere */
-  TOPICS.forEach(t => {
-    s.activeTopics[t.id] = false;
-    t.cards.forEach((c, i) => {
-      const key = t.id + ':' + i;
-      s.cards[key] = {
-        box: 1,
-        due: Date.now(),
-        last: null
-      };
-    });
-  });
-  return s;
-}
-
-/* Recompute state for any new cards added via TOPICS */
-function syncState(){
-  /* Migrace ze starých verzí */
-  if(!state.activeTopics) state.activeTopics = {};
-  TOPICS.forEach(t => {
-    /* Inicializace activeTopics pro nová témata */
-    if(state.activeTopics[t.id] === undefined){
-      state.activeTopics[t.id] = false;
-    }
-    t.cards.forEach((c, i) => {
-      const key = t.id + ':' + i;
-      if(!state.cards[key]){
-        state.cards[key] = {box:1, due: Date.now(), last:null};
-      }
-    });
-  });
-  saveState();
-}
-syncState();
-
-function isTopicActive(topicId){
-  return state.activeTopics[topicId] === true;
-}
-function setTopicActive(topicId, active){
-  state.activeTopics[topicId] = active;
-  /* Při aktivaci - resetovat karty do Box 1 (jen pokud jsou v Box 5 nebo neaktivní) */
-  if(active){
-    const topic = TOPICS.find(t => t.id === topicId);
-    if(topic){
-      topic.cards.forEach((c, i) => {
-        const key = topicId + ':' + i;
-        /* Pokud karta nikdy nebyla studována, ujistit se že je v Box 1 a due */
-        if(!state.cards[key].last){
-          state.cards[key] = {box: 1, due: Date.now(), last: null};
-        }
-      });
-    }
-  }
-  saveState();
-}
-
-function dayMs(){ return 24*60*60*1000; }
-function isDue(cardState){
-  return cardState.due <= Date.now();
-}
-function rateCardAnswer(key, rating){
-  /* rating: 0=bad, 1=mid, 2=good */
-  const cs = state.cards[key];
-  if(rating === 0){
-    cs.box = 1;
-  } else if(rating === 1){
-    /* keep the same box */
-  } else if(rating === 2){
-    cs.box = Math.min(cs.box + 1, 5);
-  }
-  const interval = BOX_INTERVALS[cs.box];
-  cs.due = Date.now() + interval * dayMs();
-  cs.last = Date.now();
-  /* Streak */
-  const today = new Date().toDateString();
-  const last = state.lastVisit ? new Date(state.lastVisit).toDateString() : null;
-  if(last !== today){
-    if(last){
-      const yesterday = new Date(Date.now() - dayMs()).toDateString();
-      state.streak = (last === yesterday) ? (state.streak + 1) : 1;
-    } else state.streak = 1;
-    state.lastVisit = Date.now();
-  }
-  saveState();
-}
-
-function getDueCards(topicId = null){
-  const due = [];
-  TOPICS.forEach(t => {
-    if(topicId && t.id !== topicId) return;
-    /* Pokud nefiltrujeme téma, počítat jen aktivní */
-    if(!topicId && !isTopicActive(t.id)) return;
-    t.cards.forEach((c, i) => {
-      const key = t.id + ':' + i;
-      const cs = state.cards[key];
-      if(isDue(cs)){
-        due.push({topicId: t.id, idx: i, card: c, key: key});
-      }
-    });
-  });
-  return due;
-}
-function getBoxStats(topicId = null){
-  const stats = [0, 0, 0, 0, 0]; /* box 1-5 */
-  TOPICS.forEach(t => {
-    if(topicId && t.id !== topicId) return;
-    /* Pokud nefiltrujeme téma, počítat jen aktivní */
-    if(!topicId && !isTopicActive(t.id)) return;
-    t.cards.forEach((c, i) => {
-      const key = t.id + ':' + i;
-      const box = state.cards[key].box;
-      stats[box-1]++;
-    });
-  });
-  return stats;
-}
-function getActiveTopicCount(){
-  return TOPICS.filter(t => isTopicActive(t.id)).length;
-}
-function getTotalActiveCards(){
-  return TOPICS.filter(t => isTopicActive(t.id))
-    .reduce((sum, t) => sum + t.cards.length, 0);
-}
-
-/* ═══════════════════════════════════════════════════════
-   VIEWS — DASHBOARD, TOPIC, STUDY, QUIZ, DONE
-═══════════════════════════════════════════════════════ */
-let currentTopic = null;
-let session = null;
-
-function $(id){ return document.getElementById(id); }
-function goView(id){
-  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-  $('view-' + id).classList.add('active');
-  window.scrollTo({top:0, behavior:'smooth'});
-  if(id === 'dashboard') renderDashboard();
-  if(id === 'topic') renderTopic();
-}
-
-/* DASHBOARD */
-function renderDashboard(){
-  const due = getDueCards();
-  const activeCards = getTotalActiveCards();
-  const activeTopics = getActiveTopicCount();
-  const boxStats = getBoxStats();
-  $('dash-due').textContent = due.length;
-  $('dash-mastered').textContent = boxStats[4];
-  $('dash-total').textContent = activeCards;
-  $('streak-num').textContent = state.streak;
-
-  /* Dynamický hero text podle aktivních témat */
-  const heroTitle = $('hero-title');
-  const heroCta = $('hero-cta');
-  if(activeTopics === 0){
-    if(heroTitle) heroTitle.innerHTML = 'Vyber si <em>první téma</em><br>a začni se učit';
-    if(heroCta) {
-      heroCta.textContent = 'Vybrat téma níže ↓';
-      heroCta.disabled = true;
-    }
-  } else if(due.length === 0){
-    if(heroTitle) heroTitle.innerHTML = 'Dnes máš <em>všechno</em><br>opakováno. Skvělá práce!';
-    if(heroCta){
-      heroCta.innerHTML = 'Učit se další<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>';
-      heroCta.disabled = false;
-      heroCta.onclick = () => goView('dashboard');
-    }
-  } else {
-    if(heroTitle) heroTitle.innerHTML = 'Dnes <em>opakuješ</em><br>'+due.length+' karet';
-    if(heroCta){
-      heroCta.innerHTML = 'Opakovat dnešní karty<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>';
-      heroCta.disabled = false;
-      heroCta.onclick = () => startReviewAll();
-    }
-  }
-
-  /* Box progress */
-  const bp = $('box-progress');
-  bp.innerHTML = '';
-  for(let i = 0; i < 5; i++){
-    const row = document.createElement('div');
-    row.className = 'box-row';
-    row.innerHTML =
-      '<div class="box-icon b'+(i+1)+'">'+(i+1)+'</div>'+
-      '<div class="box-info">'+
-      '<div class="box-name">'+BOX_NAMES[i].split(' — ')[0]+'</div>'+
-      '<div class="box-interval">'+BOX_NAMES[i].split(' — ')[1]+'</div>'+
-      '</div>'+
-      '<div class="box-count">'+boxStats[i]+'</div>';
-    bp.appendChild(row);
-  }
-  /* Topics */
-  renderTopicGrid('pravopis', $('topics-pravopis'), $('meta-pravopis'));
-}
-function renderTopicGrid(section, container, meta){
-  const items = TOPICS.filter(t => t.section === section);
-  const activeCount = items.filter(t => isTopicActive(t.id)).length;
-  meta.textContent = activeCount + ' z ' + items.length + ' aktivních';
-  container.innerHTML = '';
-  items.forEach(t => {
-    const active = isTopicActive(t.id);
-    const due = getDueCards(t.id).length;
-    const stats = getBoxStats(t.id);
-    const mastered = stats[4];
-    const total = t.cards.length;
-    const percent = Math.round(mastered / total * 100);
-    const card = document.createElement('div');
-    card.className = 'topic ' + section + (active ? ' active' : ' inactive');
-    card.innerHTML =
-      '<div class="topic-toggle-row">'+
-        '<div class="topic-tag">'+t.tag+'</div>'+
-        '<button class="topic-toggle '+(active?'on':'off')+'" data-tid="'+t.id+'" title="'+(active?'Aktivní (klik = vypnout)':'Neaktivní (klik = zapnout)')+'">'+
-          '<span class="toggle-knob"></span>'+
-        '</button>'+
-      '</div>'+
-      '<div class="topic-title">'+t.title+'</div>'+
-      '<div class="topic-desc">'+t.desc+'</div>'+
-      '<div class="topic-stats">'+
-        '<div class="topic-stat"><span class="topic-stat-num">'+total+'</span> karet</div>'+
-        (active ? '<div class="topic-stat"><span class="topic-stat-num">'+percent+'%</span> zvládnuto</div>' : '<div class="topic-stat" style="color:var(--ink-muted)">spící</div>')+
-        (active ? '<div class="topic-due '+(due===0?'zero':'')+'">'+(due===0?'✓ vše OK':'⏰ '+due)+'</div>' : '')+
-      '</div>';
-    /* Klik na kartu = otevře téma. Klik na přepínač = zapne/vypne */
-    card.onclick = (e) => {
-      if(e.target.closest('.topic-toggle')){
-        e.stopPropagation();
-        const tid = e.target.closest('.topic-toggle').dataset.tid;
-        setTopicActive(tid, !isTopicActive(tid));
-        renderDashboard();
-      } else {
-        openTopic(t.id);
-      }
-    };
-    container.appendChild(card);
-  });
-}
-
-/* TOPIC */
-function openTopic(id){
-  currentTopic = TOPICS.find(t => t.id === id);
-  goView('topic');
-}
-function renderTopic(){
-  if(!currentTopic) return;
-  $('t-tag').textContent = currentTopic.tag;
-  $('t-title').textContent = currentTopic.title;
-  $('t-desc').textContent = currentTopic.desc;
-  const due = getDueCards(currentTopic.id);
-  $('t-due').textContent = due.length;
-  $('t-due-time').textContent = due.length > 0 ? 'k opakování dnes' : 'vše hotovo';
-  $('t-total').textContent = currentTopic.cards.length;
-  $('t-quiz-count').textContent = currentTopic.quiz ? currentTopic.quiz.length : 0;
-  /* Box stats for this topic */
-  const stats = getBoxStats(currentTopic.id);
-  const bp = $('t-box-progress');
-  bp.innerHTML = '';
-  for(let i = 0; i < 5; i++){
-    const row = document.createElement('div');
-    row.className = 'box-row';
-    row.innerHTML =
-      '<div class="box-icon b'+(i+1)+'">'+(i+1)+'</div>'+
-      '<div class="box-info">'+
-      '<div class="box-name">'+BOX_NAMES[i].split(' — ')[0]+'</div>'+
-      '<div class="box-interval">'+BOX_NAMES[i].split(' — ')[1]+'</div>'+
-      '</div>'+
-      '<div class="box-count">'+stats[i]+'</div>';
-    bp.appendChild(row);
-  }
-}
-
-/* STUDY (flashcards) */
-function startReviewAll(){
-  const due = getDueCards();
-  if(due.length === 0){
-    showDone('Skvělé!', 'Pro dnes nejsou žádné karty k opakování. Vrať se zítra.', []);
-    return;
-  }
-  /* Shuffle */
-  due.sort(() => Math.random() - 0.5);
-  session = {type:'study', queue: due, idx: 0, correct: 0, total: due.length};
-  goView('study');
-  renderCard();
-}
-function startTopicReview(){
-  if(!currentTopic) return;
-  const due = getDueCards(currentTopic.id);
-  if(due.length === 0){
-    showDone('Vše hotovo!', 'V tomhle tématu nemáš žádné karty na dnes.', []);
-    return;
-  }
-  due.sort(() => Math.random() - 0.5);
-  session = {type:'study', queue: due, idx: 0, correct: 0, total: due.length};
-  goView('study');
-  renderCard();
-}
-function startTopicLearn(){
-  if(!currentTopic) return;
-  /* All cards as flashcards (no Leitner change) */
-  const cards = currentTopic.cards.map((c, i) => ({
-    topicId: currentTopic.id, idx: i, card: c, key: currentTopic.id+':'+i
-  }));
-  cards.sort(() => Math.random() - 0.5);
-  session = {type:'learn', queue: cards, idx: 0, correct: 0, total: cards.length};
-  goView('study');
-  renderCard();
-}
-function renderCard(){
-  if(session.idx >= session.queue.length){ finishStudy(); return; }
-  const item = session.queue[session.idx];
-  const topic = TOPICS.find(t => t.id === item.topicId);
-  $('card').classList.remove('flipped');
-  $('card-tag').textContent = topic.tag;
-  $('card-q').innerHTML = item.card.q;
-  $('card-q-back').innerHTML = item.card.q;
-  $('card-a').innerHTML = item.card.a;
-  $('card-explain').innerHTML = item.card.explain || '';
-  $('study-now').textContent = (session.idx + 1);
-  $('study-total').textContent = session.total;
-  $('study-fill').style.width = (session.idx / session.total * 100) + '%';
-  $('rate-buttons').style.visibility = 'hidden';
-}
-function flipCard(){
-  const c = $('card');
-  if(c.classList.contains('flipped')) return;
-  c.classList.add('flipped');
-  setTimeout(() => {
-    $('rate-buttons').style.visibility = 'visible';
-  }, 300);
-}
-function rateCard(rating){
-  if(!session) return;
-  const item = session.queue[session.idx];
-  if(session.type === 'study'){
-    rateCardAnswer(item.key, rating);
-  }
-  if(rating >= 1) session.correct++;
-  session.idx++;
-  if(session.idx >= session.queue.length){
-    finishStudy();
-  } else {
-    renderCard();
-  }
-}
-function finishStudy(){
-  $('study-fill').style.width = '100%';
-  saveState();
-  showDone(
-    'Hotovo!',
-    'Prošla jsi ' + session.total + ' karet.',
-    [
-      {num: session.correct, lbl: 'Vím', cls: 'ok'},
-      {num: session.total - session.correct, lbl: 'Zopakovat', cls: 'err'},
-      {num: session.total, lbl: 'Celkem'}
-    ]
-  );
-}
-
-/* QUIZ */
-function startTopicQuiz(){
-  if(!currentTopic || !currentTopic.quiz || currentTopic.quiz.length === 0){
-    alert('Pro toto téma zatím není kvíz.');
-    return;
-  }
-  const quiz = currentTopic.quiz.slice().sort(() => Math.random() - 0.5);
-  session = {type:'quiz', queue: quiz, idx: 0, correct: 0, total: quiz.length};
-  goView('quiz');
-  renderQuiz();
-}
-function renderQuiz(){
-  if(session.idx >= session.queue.length){ finishQuiz(); return; }
-  const q = session.queue[session.idx];
-  $('quiz-tag').textContent = currentTopic.tag;
-  $('quiz-q').innerHTML = q.q;
-  const opts = $('quiz-options');
-  opts.innerHTML = '';
-  q.options.forEach((opt, i) => {
-    const b = document.createElement('button');
-    b.className = 'quiz-opt';
-    b.innerHTML = opt;
-    b.onclick = () => quizAnswer(i, b);
-    opts.appendChild(b);
-  });
-  $('quiz-fb').className = 'quiz-fb';
-  $('quiz-fb').innerHTML = '';
-  $('quiz-next').style.display = 'none';
-  $('quiz-now').textContent = (session.idx + 1);
-  $('quiz-total').textContent = session.total;
-  $('quiz-fill').style.width = (session.idx / session.total * 100) + '%';
-}
-function quizAnswer(picked, btn){
-  const q = session.queue[session.idx];
-  const opts = $('quiz-options').querySelectorAll('.quiz-opt');
-  opts.forEach(o => o.disabled = true);
-  if(picked === q.correct){
-    btn.classList.add('ok');
-    session.correct++;
-    $('quiz-fb').className = 'quiz-fb show ok';
-    $('quiz-fb').innerHTML = '<b>Správně!</b> ' + q.explain;
-  } else {
-    btn.classList.add('err');
-    opts[q.correct].classList.add('ok');
-    $('quiz-fb').className = 'quiz-fb show err';
-    $('quiz-fb').innerHTML = '<b>Špatně.</b> ' + q.explain;
-  }
-  $('quiz-next').style.display = 'block';
-}
-function quizNext(){
-  session.idx++;
-  if(session.idx >= session.queue.length){ finishQuiz(); }
-  else renderQuiz();
-}
-function finishQuiz(){
-  $('quiz-fill').style.width = '100%';
-  showDone(
-    'Kvíz dokončen',
-    'Skóre: ' + session.correct + ' z ' + session.total + ' (' + Math.round(session.correct/session.total*100) + '%)',
-    [
-      {num: session.correct, lbl: 'Správně', cls:'ok'},
-      {num: session.total - session.correct, lbl: 'Špatně', cls:'err'}
-    ]
-  );
-}
-
-/* DONE */
-function showDone(title, meta, stats){
-  $('done-title').textContent = title;
-  $('done-meta').textContent = meta;
-  const ds = $('done-stats');
-  ds.innerHTML = '';
-  stats.forEach(s => {
-    const d = document.createElement('div');
-    d.className = 'done-stat';
-    d.innerHTML = '<div class="done-stat-num '+(s.cls||'')+'">'+s.num+'</div><div class="done-stat-lbl">'+s.lbl+'</div>';
-    ds.appendChild(d);
-  });
-  goView('done');
-}
-
-function confirmExit(){
-  if(confirm('Opravdu chceš ukončit? Postup se uloží.')){
-    goView(currentTopic ? 'topic' : 'dashboard');
-  }
-}
-
-/* INIT */
-renderDashboard();
-</script>
 </body>
 </html>
