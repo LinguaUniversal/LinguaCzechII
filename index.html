@@ -219,6 +219,7 @@ body{
   transition: transform .15s, box-shadow .15s;
 }
 .hero-cta:hover{ transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,0,0,.18); }
+.hero-cta:disabled{ opacity: .5; cursor: default; transform: none; box-shadow: none; }
 
 .hero-aside{
   background: var(--surface);
@@ -334,14 +335,56 @@ body{
   transition: transform .25s ease;
   transform-origin: top;
 }
+.topic.active::before{ transform: scaleY(1); }
+.topic.inactive{
+  background: #f8f7f3;
+  opacity: .75;
+}
+.topic.inactive .topic-title{ color: var(--ink-soft); }
 .topic:hover{
   border-color: var(--brand-100);
   box-shadow: var(--shadow);
   transform: translateY(-2px);
 }
-.topic:hover::before{ transform: scaleY(1); }
+.topic.active:hover::before{ transform: scaleY(1); }
 .topic.lit::before{ background: var(--warm); }
 .topic.kom::before{ background: #8b5cf6; }
+
+/* Topic toggle (přepínač aktivity) */
+.topic-toggle-row{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: .55rem;
+}
+.topic-toggle{
+  width: 36px;
+  height: 20px;
+  border-radius: 99px;
+  border: none;
+  background: var(--line);
+  position: relative;
+  cursor: pointer;
+  transition: background .15s;
+  padding: 0;
+  flex-shrink: 0;
+}
+.topic-toggle:hover{ filter: brightness(.95); }
+.topic-toggle .toggle-knob{
+  display: block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: white;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  transition: left .15s, background .15s;
+  box-shadow: 0 1px 2px rgba(0,0,0,.15);
+}
+.topic-toggle.on{ background: var(--accent); }
+.topic-toggle.on .toggle-knob{ left: 19px; }
+
 .topic-tag{
   font-size: .68rem;
   text-transform: uppercase;
@@ -815,7 +858,7 @@ body{
   <section class="hero">
     <div class="hero-card">
       <div class="hero-greeting">Vítej zpátky</div>
-      <h1 class="hero-title">Pravopis <em>krok za krokem</em><br>chytrým opakováním</h1>
+      <h1 class="hero-title" id="hero-title">Pravopis <em>krok za krokem</em><br>chytrým opakováním</h1>
       <div class="hero-stats-row">
         <div>
           <div class="hero-stat-num" id="dash-due">0</div>
@@ -830,7 +873,7 @@ body{
           <div class="hero-stat-lbl">Celkem karet</div>
         </div>
       </div>
-      <button class="hero-cta" onclick="startReviewAll()">
+      <button class="hero-cta" id="hero-cta">
         Opakovat dnešní karty
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
       </button>
@@ -1005,16 +1048,19 @@ let state = loadState() || initState();
 function initState(){
   const s = {
     cards: {},  /* {topicId+cardIdx: {box: 1-5, due: timestamp, last: timestamp}} */
+    activeTopics: {},  /* {topicId: true/false} - kterým tématům se učíme */
     streak: 0,
     lastVisit: null,
     quizStats: {}
   };
+  /* Zpočátku NEJSOU žádná aktivní - žák si vybere */
   TOPICS.forEach(t => {
+    s.activeTopics[t.id] = false;
     t.cards.forEach((c, i) => {
       const key = t.id + ':' + i;
       s.cards[key] = {
         box: 1,
-        due: Date.now(),  /* due now */
+        due: Date.now(),
         last: null
       };
     });
@@ -1024,7 +1070,13 @@ function initState(){
 
 /* Recompute state for any new cards added via TOPICS */
 function syncState(){
+  /* Migrace ze starých verzí */
+  if(!state.activeTopics) state.activeTopics = {};
   TOPICS.forEach(t => {
+    /* Inicializace activeTopics pro nová témata */
+    if(state.activeTopics[t.id] === undefined){
+      state.activeTopics[t.id] = false;
+    }
     t.cards.forEach((c, i) => {
       const key = t.id + ':' + i;
       if(!state.cards[key]){
@@ -1035,6 +1087,27 @@ function syncState(){
   saveState();
 }
 syncState();
+
+function isTopicActive(topicId){
+  return state.activeTopics[topicId] === true;
+}
+function setTopicActive(topicId, active){
+  state.activeTopics[topicId] = active;
+  /* Při aktivaci - resetovat karty do Box 1 (jen pokud jsou v Box 5 nebo neaktivní) */
+  if(active){
+    const topic = TOPICS.find(t => t.id === topicId);
+    if(topic){
+      topic.cards.forEach((c, i) => {
+        const key = topicId + ':' + i;
+        /* Pokud karta nikdy nebyla studována, ujistit se že je v Box 1 a due */
+        if(!state.cards[key].last){
+          state.cards[key] = {box: 1, due: Date.now(), last: null};
+        }
+      });
+    }
+  }
+  saveState();
+}
 
 function dayMs(){ return 24*60*60*1000; }
 function isDue(cardState){
@@ -1070,6 +1143,8 @@ function getDueCards(topicId = null){
   const due = [];
   TOPICS.forEach(t => {
     if(topicId && t.id !== topicId) return;
+    /* Pokud nefiltrujeme téma, počítat jen aktivní */
+    if(!topicId && !isTopicActive(t.id)) return;
     t.cards.forEach((c, i) => {
       const key = t.id + ':' + i;
       const cs = state.cards[key];
@@ -1084,6 +1159,8 @@ function getBoxStats(topicId = null){
   const stats = [0, 0, 0, 0, 0]; /* box 1-5 */
   TOPICS.forEach(t => {
     if(topicId && t.id !== topicId) return;
+    /* Pokud nefiltrujeme téma, počítat jen aktivní */
+    if(!topicId && !isTopicActive(t.id)) return;
     t.cards.forEach((c, i) => {
       const key = t.id + ':' + i;
       const box = state.cards[key].box;
@@ -1091,6 +1168,13 @@ function getBoxStats(topicId = null){
     });
   });
   return stats;
+}
+function getActiveTopicCount(){
+  return TOPICS.filter(t => isTopicActive(t.id)).length;
+}
+function getTotalActiveCards(){
+  return TOPICS.filter(t => isTopicActive(t.id))
+    .reduce((sum, t) => sum + t.cards.length, 0);
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -1111,12 +1195,38 @@ function goView(id){
 /* DASHBOARD */
 function renderDashboard(){
   const due = getDueCards();
-  const allCards = TOPICS.reduce((s,t) => s + t.cards.length, 0);
+  const activeCards = getTotalActiveCards();
+  const activeTopics = getActiveTopicCount();
   const boxStats = getBoxStats();
   $('dash-due').textContent = due.length;
   $('dash-mastered').textContent = boxStats[4];
-  $('dash-total').textContent = allCards;
+  $('dash-total').textContent = activeCards;
   $('streak-num').textContent = state.streak;
+
+  /* Dynamický hero text podle aktivních témat */
+  const heroTitle = $('hero-title');
+  const heroCta = $('hero-cta');
+  if(activeTopics === 0){
+    if(heroTitle) heroTitle.innerHTML = 'Vyber si <em>první téma</em><br>a začni se učit';
+    if(heroCta) {
+      heroCta.textContent = 'Vybrat téma níže ↓';
+      heroCta.disabled = true;
+    }
+  } else if(due.length === 0){
+    if(heroTitle) heroTitle.innerHTML = 'Dnes máš <em>všechno</em><br>opakováno. Skvělá práce!';
+    if(heroCta){
+      heroCta.innerHTML = 'Učit se další<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>';
+      heroCta.disabled = false;
+      heroCta.onclick = () => goView('dashboard');
+    }
+  } else {
+    if(heroTitle) heroTitle.innerHTML = 'Dnes <em>opakuješ</em><br>'+due.length+' karet';
+    if(heroCta){
+      heroCta.innerHTML = 'Opakovat dnešní karty<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>';
+      heroCta.disabled = false;
+      heroCta.onclick = () => startReviewAll();
+    }
+  }
 
   /* Box progress */
   const bp = $('box-progress');
@@ -1138,26 +1248,43 @@ function renderDashboard(){
 }
 function renderTopicGrid(section, container, meta){
   const items = TOPICS.filter(t => t.section === section);
-  meta.textContent = items.length + ' témat';
+  const activeCount = items.filter(t => isTopicActive(t.id)).length;
+  meta.textContent = activeCount + ' z ' + items.length + ' aktivních';
   container.innerHTML = '';
   items.forEach(t => {
+    const active = isTopicActive(t.id);
     const due = getDueCards(t.id).length;
     const stats = getBoxStats(t.id);
     const mastered = stats[4];
     const total = t.cards.length;
     const percent = Math.round(mastered / total * 100);
     const card = document.createElement('div');
-    card.className = 'topic ' + section;
-    card.onclick = () => openTopic(t.id);
+    card.className = 'topic ' + section + (active ? ' active' : ' inactive');
     card.innerHTML =
-      '<div class="topic-tag">'+t.tag+'</div>'+
+      '<div class="topic-toggle-row">'+
+        '<div class="topic-tag">'+t.tag+'</div>'+
+        '<button class="topic-toggle '+(active?'on':'off')+'" data-tid="'+t.id+'" title="'+(active?'Aktivní (klik = vypnout)':'Neaktivní (klik = zapnout)')+'">'+
+          '<span class="toggle-knob"></span>'+
+        '</button>'+
+      '</div>'+
       '<div class="topic-title">'+t.title+'</div>'+
       '<div class="topic-desc">'+t.desc+'</div>'+
       '<div class="topic-stats">'+
         '<div class="topic-stat"><span class="topic-stat-num">'+total+'</span> karet</div>'+
-        '<div class="topic-stat"><span class="topic-stat-num">'+percent+'%</span> zvládnuto</div>'+
-        '<div class="topic-due '+(due===0?'zero':'')+'">'+(due===0?'✓ vše OK':'⏰ '+due)+'</div>'+
+        (active ? '<div class="topic-stat"><span class="topic-stat-num">'+percent+'%</span> zvládnuto</div>' : '<div class="topic-stat" style="color:var(--ink-muted)">spící</div>')+
+        (active ? '<div class="topic-due '+(due===0?'zero':'')+'">'+(due===0?'✓ vše OK':'⏰ '+due)+'</div>' : '')+
       '</div>';
+    /* Klik na kartu = otevře téma. Klik na přepínač = zapne/vypne */
+    card.onclick = (e) => {
+      if(e.target.closest('.topic-toggle')){
+        e.stopPropagation();
+        const tid = e.target.closest('.topic-toggle').dataset.tid;
+        setTopicActive(tid, !isTopicActive(tid));
+        renderDashboard();
+      } else {
+        openTopic(t.id);
+      }
+    };
     container.appendChild(card);
   });
 }
